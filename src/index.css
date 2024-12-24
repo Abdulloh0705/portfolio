@@ -1,0 +1,35 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter";
+  font-weight: 400;
+}
+
+a{
+  text-decoration: none !important;
+}
+
+a:hover{
+  box-shadow: none;
+}
+
+ul{
+  list-style: none !important;
+}
+
+img{
+  vertical-align: bottom;
+  /* width: 100%; */
+}
+button{
+  border: none;
+  outline: none;
+  background: none;
+}
+.container{
+  max-width: 1366px;
+  width: 100%;
+  padding: 15px 15px;
+  margin: 0 auto;
+}

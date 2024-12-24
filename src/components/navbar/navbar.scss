@@ -1,0 +1,61 @@
+.nav {
+    padding-bottom: 30px;
+
+    &_box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &_basket-btn {
+        margin-right: 10px;
+
+    }
+
+    &_basket-btn,
+    &_like-btn {
+        font-size: 20px;
+        background: none;
+        color: rgb(105, 107, 107);
+        border: none;
+    }
+
+    &_logo-title {
+        color: rgb(105, 107, 107);
+        font-size: 20px;
+        font-weight: 900;
+        padding-left: 200px;
+    }
+
+    &_search {
+        display: flex;
+    }
+
+
+}
+
+.from_search {
+    border-radius: 0px 5px 5px 0px;
+    font-size: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    background-color: #adadad;
+    padding: 3px 3px 1px 0px;
+    max-height: 26px;
+}
+
+
+input {
+    padding: 5px 10px;
+    width: 250px;
+    border: none;
+    outline: none;
+    background-color: #adadad;
+    border-radius: 5px 0px 0px 5px;
+    color: #fff;
+
+    &::placeholder {
+        color: #fff;
+    }
+}

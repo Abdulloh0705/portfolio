@@ -1,47 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css'; // Yangi CSS faylini import qilish
+import React, { useState, useEffect } from 'react'; // React kutubxonasidan kerakli komponentlarni import qilish
+import { Swiper, SwiperSlide } from 'swiper/react'; // Swiper kutubxonasidan kerakli komponentlarni import qilish
+import 'swiper/css'; // Swiperning CSS faylini ulash
 
-import "./cards.scss";
+import './cards.scss'; // O'zining SCSS faylini ulash
 
-// Cards komponenti
 const Cards = () => {
-    const [products, setProducts] = useState([]); // Mahsulotlar ro'yxatini saqlash uchun holat
+    const [products, setProducts] = useState([]); // Mahsulotlar ro'yxatini saqlash uchun React holati (state)
 
-    // useEffect - komponent ishlaganda faqat bir marta API dan ma'lumot olish
+    // Komponent birinchi marta yuklanganda API orqali ma'lumot olish
     useEffect(() => {
-        fetch('https://dummyjson.com/products?limit=100') // API ga so'rov yuborish
-            .then(response => response.json()) // Javobni JSON formatiga o'tkazish
-            .then(data => setProducts(data.products)); // Mahsulotlar ro'yxatini holatga saqlash
-    }, []);
+        fetch('https://dummyjson.com/products?limit=100') // DummyJSON APIga 100 ta mahsulotni olish uchun so'rov
+            .then((response) => response.json()) // API javobini JSON formatiga o'girish
+            .then((data) => {
+                console.log('API Response:', data); // Konsolda API javobini ko'rsatish (faqat tekshirish uchun)
+                setProducts(data.products); // Javobdan olingan mahsulotlarni state-ga yozish
+            })
+            .catch((error) => console.error('API xatosi:', error)); // Xatolik bo'lsa, konsolga chiqarish
+    }, []); // Faqat bir marta ishlashi uchun bo'sh dependency massivi
+
+    products.map((prod) => {
+        prod?.images?.map((item) => {
+            console.log(item);
+        })
+    });
+
 
     return (
         <div className="cards">
-            <div className="container">
-                <div className="card_box">
-                    {/* Mahsulotlarni ekranga chiqarish */}
-                    {products.map((product) => (
-                        <div className="card" key={product.id}>
-                            {/* Swiper uchun tasvirlar */}
+            <div className="container"> {/* Mahsulotlarni o'rab turadigan asosiy konteyner */}
+                <div className="card_box"> {/* Karta ro'yxatini qutiga joylash */}
+                    {products.map((product) => ( // Mahsulotlarni mapping qilish orqali har bir mahsulot uchun karta yaratish
+                        <div className="card" key={product.id}> {/* Har bir mahsulot kartasi */}
                             <Swiper
-                                spaceBetween={10} // Rasm orasidagi bo'shliq
-                                slidesPerView={1} // Har bir safar faqat bir rasm ko'rsatiladi
-                                autoplay={{ delay: 2000 }} // Avtomatik o'zgarish vaqti
-                                loop={products.length > 2} // Har bir rasm oxiriga yetganda boshidan boshlanishi
+                                spaceBetween={10} // Slayder orasidagi bo'shliqni sozlash
+                                slidesPerView={1} // Har safar bir slayd ko'rsatiladi
+                                autoplay={{ delay: 2000 }} // Slaydlar avtomatik o'zgarishi uchun sozlama
                             >
-                                {product.images.map((image, index) => (
-                                    <SwiperSlide key={index}>
-                                        <img src={image} alt={`${product.title} image ${index + 1}`} />
+                                {product?.images?.map((image, index) => ( // Har bir tasvir uchun slayd yaratish
+                                    <SwiperSlide key={index}> {/* Slayderdagi bitta rasm */}
+                                        <img
+                                            src={`${image}`} // API dan olingan rasm URL'ini ulash
+                                            alt={`${product.title}`} // Mahsulot nomini alt atributida ko'rsatish
+                                        />
                                     </SwiperSlide>
                                 ))}
                             </Swiper>
-
-                            
-                          <div className="product_text">
-                          <h3>{product.title}</h3>
-                            
-                            <p>Price: ${product.price}</p>
-                          </div>
+                            <div className="product_text"> {/* Mahsulot haqida ma'lumot */}
+                                <h3>{product.title}</h3> {/* Mahsulot nomini ko'rsatish */}
+                                <p>Price: ${product.price}</p> {/* Mahsulot narxini ko'rsatish */}
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -50,4 +57,4 @@ const Cards = () => {
     );
 };
 
-export default Cards;
+export default Cards; // Cards komponentini eksport qilish

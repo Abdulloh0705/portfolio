@@ -1,18 +1,21 @@
-import React from 'react'
-import "./navbar.scss"
-import { Link } from 'react-router-dom'
-import { FaShoppingBasket } from 'react-icons/fa'
-import { BiSolidLike } from 'react-icons/bi'
-import { IoSearch } from 'react-icons/io5'
+import React, { useContext } from 'react';
+import './navbar.scss';
+import { Link } from 'react-router-dom';
+import { FaShoppingBasket } from 'react-icons/fa';
+import { BiSolidLike } from 'react-icons/bi';
+import { IoSearch } from 'react-icons/io5';
+import { Context } from '../../Context/Context';
 
 const Navbar = () => {
+    const { value, setValue } = useContext(Context);
+
     return (
         <>
             <div className="nav">
                 <div className="container">
                     <div className="nav_box">
                         <div className="nav_basket">
-                            <button className='nav_basket-btn'>
+                            <button className="nav_basket-btn">
                                 <FaShoppingBasket />
                             </button>
                             <button className="nav_like-btn">
@@ -20,15 +23,16 @@ const Navbar = () => {
                             </button>
                         </div>
                         <div className="nav_logo">
-                            <Link to='/' className='nav_logo-title'>Izana</Link>
+                            <Link to="/" className="nav_logo-title">Izana</Link>
                         </div>
                         <div className="nav_search">
-                            <form >
+                            <form>
                                 <input
                                     type="text"
-                                    placeholder='product name'
+                                    placeholder="product name"
+                                    value={value}
+                                    onChange={(e) => setValue(e.target.value)}
                                 />
-
                             </form>
                             <div className="nav_from_search">
                                 <button className="from_search">
@@ -40,7 +44,7 @@ const Navbar = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

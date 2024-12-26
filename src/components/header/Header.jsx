@@ -4,10 +4,10 @@ import './header.scss';
 // Header komponenti
 const Header = () => {
     // `isActive` holati: Price menyusining ochiq/yopiq holatini boshqaradi
-    const [isActive, setActive] = useState(false); 
-    
+    const [isActive, setActive] = useState(false);
+
     // `isStarActive` holati: Star menyusining ochiq/yopiq holatini boshqaradi
-    const [isStarActive, setStarActive] = useState(false); 
+    const [isStarActive, setStarActive] = useState(false);
 
     // Tashqi joyni bosganingizda menyuni yopish funksiyasi
     const handleClickOutside = (event) => {
@@ -22,10 +22,10 @@ const Header = () => {
 
     useEffect(() => {
         // `click` hodisasini tinglash
-        document.addEventListener('click', handleClickOutside); 
+        document.addEventListener('click', handleClickOutside);
         return () => {
             // Hamma hodisalarni tozalash
-            document.removeEventListener('click', handleClickOutside); 
+            document.removeEventListener('click', handleClickOutside);
         };
     }, [isActive, isStarActive]);
 
@@ -71,14 +71,13 @@ const Header = () => {
                                     className={`star_btn ${isStarActive ? 'active' : ''}`}
                                     onClick={toggleStarMenu} // Tugma bosilganda menyuni ochadi/yopadi
                                 >
-                                    <p className="btn_title">Star</p>
+                                    <p className="btn_title">Stock</p>
                                 </button>
                                 {/* Star menyusi ochiq bo'lsa ko'rsatiladi */}
                                 {isStarActive && (
                                     <ul className="menu">
-                                        <li>5 Stars</li>          {/* 5 yulduz */}
-                                        <li>4 Stars</li>          {/* 4 yulduz */}
-                                        <li>3 Stars & Below</li> {/* 3 va undan kam yulduz */}
+                                        <li>Low to High</li>
+                                        <li>High to Low</li>
                                     </ul>
                                 )}
                             </div>

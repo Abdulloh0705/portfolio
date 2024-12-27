@@ -6,14 +6,15 @@
         justify-content: space-between;
         align-items: center;
     }
-
-    &_basket-btn {
-        margin-right: 10px;
-
+    &_basket{
+        display: flex;
+        gap: 10px;
+        
     }
 
     &_basket-btn,
     &_like-btn {
+        cursor: pointer;
         font-size: 20px;
         background: none;
         color: rgb(105, 107, 107);
@@ -47,8 +48,10 @@
 
 
 input {
+    margin: 0px 5px 0px 10px;
     padding: 5px 10px;
-    width: 250px;
+    max-width: 250px;
+    width: 100%;
     border: none;
     outline: none;
     background-color: #adadad;

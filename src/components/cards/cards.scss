@@ -92,3 +92,12 @@
     width: 200px;
     height: 100px;
 }
+.cards_like{
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+}
+.like_btn{
+    color: #ccc;
+    font-size: 30px;
+}

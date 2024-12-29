@@ -1,5 +1,5 @@
 .cards {
-   
+  
     .card_box {
         
         display: flex;
@@ -7,7 +7,6 @@
         flex-wrap: wrap;
         gap: 23px;
     }
-
     .card {
         background-color: #757474;
         border-radius: 9px;
@@ -23,7 +22,6 @@
         overflow: hidden;
         transition: transform 0.3s ease-in-out;
         gap: 30px;
-
         &:hover {
             transform: scale(1.06);
         }
@@ -51,7 +49,6 @@
     }
 
     .product_text {
-        text-wrap: wrap;
         height: auto;
         text-align: center;
     }
@@ -84,20 +81,25 @@
     justify-content: space-around;
     gap: 10px;
 }
-.card_img img:nth-child(6) { 
-    width: 200px;
-    height: 100px;
-}
 .cards_like{
     display: flex;
     justify-content: end;
     align-items: flex-end;
 }
 .like_btn{
+    display: flex; 
+    justify-content: start;
     color: #ccc;
     font-size: 30px;
 }
 .pages{
+    position: sticky;
+    bottom: 0;
+    border-radius: 15px 15px 0px 0px;
+    background-color: rgb(235, 233, 233);
     display: flex;
     justify-content: center;
+    z-index: 999;
+    padding: 5px;
+    margin-top: 16px ;
 }

@@ -1,7 +1,11 @@
 import React from 'react'
 import "./pages.scss"
+import "./page.js"
 import ReactPaginate from 'react-paginate'
 const Pages = () => {
+  const handleClick = (pag) => {
+    console.log(pag);
+  }
   return (
     <>
       <ReactPaginate
@@ -13,6 +17,7 @@ const Pages = () => {
         activeLinkClassName='paginate_active'
         previousClassName='paginate_prev'
         nextClassName='paginate_next'
+        onPageChange={handleClick}
         marginPagesDisplayed={1}
       />
     </>

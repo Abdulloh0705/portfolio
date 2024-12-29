@@ -1,11 +1,10 @@
 .paginate {
-    max-width: 900px;
-    width: 100%;
+    max-width: 240px;
     display: flex;
     justify-content: center;
     gap: 30px;
-    padding: 5px;
-    margin-top: 10px;
-    border-radius: 15px 15px 0px 0px;
-    background-color: rgb(197, 197, 197);
+    user-select: none;
+    &_active {
+        color: rgb(255, 0, 0);
+    }
 }

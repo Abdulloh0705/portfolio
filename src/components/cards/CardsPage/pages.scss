@@ -2,9 +2,34 @@
     max-width: 240px;
     display: flex;
     justify-content: center;
-    gap: 30px;
+    
     user-select: none;
     &_active {
         color: rgb(255, 0, 0);
     }
 }
+.paginate {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .paginate_link {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    color: #000;
+    cursor: pointer;
+  }
+  
+  .paginate_active {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+  }
+  
+  .paginate_prev, .paginate_next {
+    font-weight: bold;
+  }
+  

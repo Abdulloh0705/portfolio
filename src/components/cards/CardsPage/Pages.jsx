@@ -5,16 +5,18 @@ const Pages = () => {
   return (
     <>
       <ReactPaginate
-       breakLabel="..."
-       nextLabel="next >"
-       onPageChange={handlePageClick}
-       pageRangeDisplayed={5}
-       pageCount={pageCount}
-       previousLabel="< previous"
-       renderOnZeroPageCount={null}
+        className='paginate'
+        pageCount={8}
+        previousLabel={'<<'}
+        nextLabel={'>>'}
+        pageLinkClassName='paginate_link'
+        activeLinkClassName='paginate_active'
+        previousClassName='paginate_prev'
+        nextClassName='paginate_next'
+        marginPagesDisplayed={1}
       />
     </>
-    
+
   )
 }
 

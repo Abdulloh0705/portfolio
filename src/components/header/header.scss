@@ -1,36 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+ES+Deco+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Yuji+Mai&display=swap');
 
 .header {
+
+    margin: 20px 0px 20px 0px;
     &_price {
-        display: flex; // Elementlarni yonma-yon joylashtirish
-        justify-content: center; // Markazga yo'naltirish
-        gap: 50px; // Elementlar orasidagi bo‘shliq
+        display: flex; 
+        justify-content: center; 
+        gap: 50px; 
     }
 
     .menu {
-        list-style: none; // Ro'yxat belgilarini olib tashlash
-        padding: 10px; // Ichki bo‘shliq
-        margin-top: 5px; // Yuqoridan bo‘shliq
-        background-color: #e2e2e2; // Fon rangi
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Qora soya
-        border-radius: 6px 12px 12px 12px; // Chekkalarni yumaloqlash
-        position: absolute; // Joylashuvni absolyut qilib qo'yish
+        list-style: none; 
+        padding: 10px; 
+        margin-top: 5px; 
+        background-color: #e2e2e2; 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+        border-radius: 6px 12px 12px 12px; 
+        position: absolute; 
         z-index: 9999;
     }
 
     .menu li {
-        padding: 5px 10px; // Har bir elementning ichki bo‘shlig‘i
-        cursor: pointer; // Ko‘rsatkichni o‘zgartirish
+        padding: 5px 10px; 
+        cursor: pointer; 
     }
 
     .menu li:hover {
-        background-color: #acacac; // Sichqoncha olib borilganda fon rangi
+        background-color: #acacac; 
         border-radius: 9px;
     }
 
     .money_btn,
     .star_btn {
-        position: relative; // Tugma ichida menyu joylashuvi uchun asos
+        position: relative; 
         cursor: pointer;
         font-family: "ital";
         

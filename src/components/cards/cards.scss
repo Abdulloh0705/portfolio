@@ -1,5 +1,7 @@
 .cards {
+   
     .card_box {
+        
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -29,16 +31,10 @@
 
     .card_img {
         display: flex;
-        /* Flexbox aktivlashtirish */
         align-items: center;
-        /* Vertikal markazlash */
         justify-content: center;
-        /* Gorizontal markazlash */
         width: 200px;
-        /* Cheklangan kenglik */
         height: 200px;
-        /* Cheklangan balandlik */
-
     }
 
     img {
@@ -100,4 +96,8 @@
 .like_btn{
     color: #ccc;
     font-size: 30px;
+}
+.pages{
+    display: flex;
+    justify-content: center;
 }

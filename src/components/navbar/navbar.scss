@@ -1,15 +1,22 @@
 .nav {
-    padding-bottom: 30px;
-
+    margin-bottom: 17px;
+    z-index: 999;
+    width: 100%;
+    position: fixed;
+    background-color: white;
     &_box {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 2;
     }
-    &_basket{
+
+    &_basket {
         display: flex;
         gap: 10px;
-        
+
     }
 
     &_basket-btn,
@@ -25,11 +32,13 @@
         color: rgb(105, 107, 107);
         font-size: 20px;
         font-weight: 900;
-        padding-left: 200px;
     }
 
     &_search {
         display: flex;
+        max-width: 51px;
+        flex-grow: 1; 
+        justify-content: flex-end;
     }
 
 
@@ -48,16 +57,12 @@
 
 
 input {
-    margin: 0px 5px 0px 10px;
     padding: 5px 10px;
-    max-width: 250px;
-    width: 100%;
     border: none;
     outline: none;
     background-color: #adadad;
     border-radius: 5px 0px 0px 5px;
     color: #fff;
-
     &::placeholder {
         color: #fff;
     }

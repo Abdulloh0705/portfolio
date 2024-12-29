@@ -54,7 +54,6 @@ const Cards = () => {
         <div className="cards">
             <Header sortProducts={sortProducts} />
             <div className="container">
-                
                 <div className="card_box">
                     {searchFilteredProducts.map((product) => (
                         <div className="card" key={product.id}>
@@ -64,10 +63,11 @@ const Cards = () => {
                                         {product?.images?.map((image, index) => (
                                             <SwiperSlide key={index}>
                                                 <img
-                                                style={{ 
-                                                    width: (product.id === 6 && index === 0) ? "160px" : "none",
-                                                    padding: (product.id === 6  && index ===0) ? "80px 0px 10px 50px" : "none",
-                                                }}
+                                                    style={{
+                                                        width: (product.id === 6 && index === 0) ? "150px" : "noen",
+                                                        padding: (product.id === 6 && index === 0) ? "50px 0px 0px 30px" : (product.id === 6 && index === 1) ? "70px 0px 0px 0px" : (product.id === 6 && index === 2) ? "80px 0px 0px 0px" : "none",
+
+                                                    }}
                                                     className="card_img1"
                                                     src={image}
                                                     alt={product.title}
@@ -95,6 +95,9 @@ const Cards = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+                <div className="pages">
+                    <Pages />
                 </div>
             </div>
         </div>

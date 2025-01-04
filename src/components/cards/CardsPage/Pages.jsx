@@ -1,7 +1,7 @@
 import React from 'react';
 import "./pages.scss";
 import { useDispatch } from 'react-redux';
-import { setOffset } from './page'; 
+import { setOffset } from '../../service/store'; 
 import ReactPaginate from 'react-paginate';
 
 const Pages = () => {

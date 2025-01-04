@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import './cards.scss';
@@ -7,8 +8,15 @@ import { Context } from '../../Context/Context';
 import { GiLoveMystery } from 'react-icons/gi';
 import Header from '../header/Header';
 import Pages from './CardsPage/Pages';
+import { setOffset } from '../service/store'; // Redux action
 
 const Cards = () => {
+    const dispatch = useDispatch();
+
+    // Redux state-dan ma'lumot olish
+    const limit = useSelector((state) => state.page.limit);
+    const offset = useSelector((state) => state.page.offset);
+
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const { value } = useContext(Context);
@@ -50,12 +58,15 @@ const Cards = () => {
         );
     });
 
+    // Sahifalash bo‘yicha mahsulotlarni filter qilish
+    const paginatedProducts = searchFilteredProducts.slice(offset, offset + limit);
+
     return (
         <div className="cards">
             <Header sortProducts={sortProducts} />
             <div className="container">
                 <div className="card_box">
-                    {searchFilteredProducts.map((product) => (
+                    {paginatedProducts.map((product) => (
                         <div className="card" key={product.id}>
                             <div className="card_img">
                                 <Link to={`/products/${product.id}`}>
@@ -64,9 +75,10 @@ const Cards = () => {
                                             <SwiperSlide key={index}>
                                                 <img
                                                     style={{
-                                                        width: (product.id === 6 && index === 0) ? "150px" : "noen",
-                                                        padding: (product.id === 6 && index === 0) ? "50px 0px 0px 30px" : (product.id === 6 && index === 1) ? "70px 0px 0px 0px" : (product.id === 6 && index === 2) ? "80px 0px 0px 0px" : "none",
-
+                                                        width: (product.id === 6 && index === 0) ? "150px" : "none",
+                                                        padding: (product.id === 6 && index === 0) ? "50px 0px 0px 30px" : 
+                                                          (product.id === 6 && index === 1) ? "70px 0px 0px 0px" : 
+                                                          (product.id === 6 && index === 2) ? "80px 0px 0px 0px" : "none",
                                                     }}
                                                     className="card_img1"
                                                     src={image}
@@ -96,10 +108,13 @@ const Cards = () => {
                         </div>
                     ))}
                 </div>
-                <div className="pages">
+              
+            </div>
+
+           <div className="pages">
                     <Pages />
                 </div>
-            </div>
+           
         </div>
     );
 };

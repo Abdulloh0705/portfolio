@@ -1,19 +1,9 @@
 .paginate {
-    max-width: 240px;
     display: flex;
-    justify-content: center;
     
-    user-select: none;
-    &_active {
-        color: rgb(255, 0, 0);
-    }
-}
-.paginate {
-    display: flex;
-    list-style: none;
     gap: 10px;
     justify-content: center;
-    margin-top: 20px;
+    padding: 20px;
   }
   
   .paginate_link {
@@ -24,7 +14,7 @@
   }
   
   .paginate_active {
-    background-color: #007bff;
+    background-color: #1b426b;
     color: #fff;
     border-radius: 5px;
   }

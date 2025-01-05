@@ -2,7 +2,7 @@
     margin: 0 auto;
     width: 100%;
     padding: 20px 3px;
-    z-index: 999;
+    z-index: 9999;
     position: sticky;
     top: 0;
     background-color: rgb(235, 233, 233);
@@ -35,7 +35,7 @@
 
     &_basket {
         display: flex;
-        gap: 10px;
+        gap: 15px;
         flex: 1;
 
     }
@@ -49,6 +49,10 @@
         flex: 1;
         display: flex;
         justify-content: end;
+    }
+    &_badge{
+        position: absolute;
+        font-size: 12px;
     }
 }
 

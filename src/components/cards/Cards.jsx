@@ -49,7 +49,7 @@ const Cards = () => {
         alert(`"${product.title}" savatchaga qo'shildi!`);
     };
 
-    // Sahifalash bo'yicha mahsulotlarni filter qilish
+    
     const paginatedProducts = filteredProducts.slice(offset, offset + limit);
 
     return (
@@ -67,7 +67,12 @@ const Cards = () => {
                                         <Swiper spaceBetween={10} slidesPerView={1} autoplay={{ delay: 2000 }}>
                                             {product?.images?.map((image, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <img className="card_img1" src={image} alt={product.title} />
+                                                    <img style={{
+                                                        width: (product.id === 6 && index === 0) ? "150px" : "none",
+                                                        padding: (product.id === 6 && index === 0) ? "50px 0px 0px 30px" :
+                                                            (product.id === 6 && index === 1) ? "70px 0px 0px 0px" :
+                                                                (product.id === 6 && index === 2) ? "80px 0px 0px 0px" : "none",
+                                                    }} className="card_img1" src={image} alt={product.title} />
                                                 </SwiperSlide>
                                             ))}
                                         </Swiper>

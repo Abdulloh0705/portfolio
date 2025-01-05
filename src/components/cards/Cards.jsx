@@ -8,83 +8,58 @@ import { Context } from '../../Context/Context';
 import { GiLoveMystery } from 'react-icons/gi';
 import Header from '../header/Header';
 import Pages from './CardsPage/Pages';
-import { setOffset } from '../service/store'; // Redux action
-import Skleton from './Skleton';
 import { FaShoppingBasket } from 'react-icons/fa';
+import { addToLikes, addToBasket, setOffset } from '../service/store';
+import Skleton from './Skleton';
 
 const Cards = () => {
     const dispatch = useDispatch();
 
-    // Redux state-dan ma'lumot olish
+    // Redux state-dan limit va offset qiymatlarini olish
     const limit = useSelector((state) => state.page.limit);
     const offset = useSelector((state) => state.page.offset);
 
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const { value } = useContext(Context);
-    const [loading, setLoading] = useState(true); // Yuklanish holati
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setLoading(true); // Yuklanishni boshlash
+        setLoading(true);
         fetch('https://dummyjson.com/products?limit=100')
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data.products);
                 setFilteredProducts(data.products);
-                setLoading(false); // Yuklanish tugadi
+                setLoading(false);
             })
             .catch((error) => {
                 console.error('API xatosi:', error);
-                setLoading(false); // Xatolik yuz bersa ham yuklanishni tugatish
+                setLoading(false);
             });
     }, []);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [offset]);
-
-    const sortProducts = (criteria) => {
-        let sortedProducts = [...products];
-        if (criteria === 'priceLowToHigh') {
-            sortedProducts.sort((a, b) => a.price - b.price);
-        } else if (criteria === 'priceHighToLow') {
-            sortedProducts.sort((a, b) => b.price - a.price);
-        } else if (criteria === 'discounts') {
-            sortedProducts.sort((a, b) => b.discountPercentage - a.discountPercentage);
-        } else if (criteria === 'stockLowToHigh') {
-            sortedProducts.sort((a, b) => a.stock - b.stock);
-        } else if (criteria === 'stockHighToLow') {
-            sortedProducts.sort((a, b) => b.stock - a.stock);
-        }
-        setFilteredProducts(sortedProducts);
+    const handleAddToLikes = (product) => {
+        dispatch(addToLikes(product));
+        alert(`"${product.title}" mahsulot sevganlar ro'yxatiga qo'shildi!`);
     };
 
-    const searchFilteredProducts = filteredProducts.filter((product) => {
-        const words = product.title.split(' ');
-        const firstWord = words[0]?.toLowerCase();
-        const restWords = words.slice(1).join(' ').toLowerCase();
+    const handleAddToBasket = (product) => {
+        dispatch(addToBasket(product));
+        alert(`"${product.title}" savatchaga qo'shildi!`);
+    };
 
-        return (
-            firstWord.startsWith(value.toLowerCase()) ||
-            restWords.startsWith(value.toLowerCase())
-        );
-    });
-
-    // Sahifalash bo‘yicha mahsulotlarni filter qilish
-    const paginatedProducts = searchFilteredProducts.slice(offset, offset + limit);
+    // Sahifalash bo'yicha mahsulotlarni filter qilish
+    const paginatedProducts = filteredProducts.slice(offset, offset + limit);
 
     return (
         <div className="cards">
-            <Header sortProducts={sortProducts} />
+            <Header />
             <div className="container">
                 <div className="card_box">
                     {loading ? (
-                        // Skeleton ko'rsatish
-                        Array.from({ length: 6 }).map((_, index) => (
-                            <Skleton key={index} />
-                        ))
+                        Array.from({ length: 6 }).map((_, index) => <Skleton key={index} />)
                     ) : (
-                        // Mahsulotlarni ko'rsatish
                         paginatedProducts.map((product) => (
                             <div className="card" key={product.id}>
                                 <div className="card_img">
@@ -92,17 +67,7 @@ const Cards = () => {
                                         <Swiper spaceBetween={10} slidesPerView={1} autoplay={{ delay: 2000 }}>
                                             {product?.images?.map((image, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <img
-                                                        style={{
-                                                            width: (product.id === 6 && index === 0) ? "150px" : "none",
-                                                            padding: (product.id === 6 && index === 0) ? "50px 0px 0px 30px" :
-                                                                (product.id === 6 && index === 1) ? "70px 0px 0px 0px" :
-                                                                    (product.id === 6 && index === 2) ? "80px 0px 0px 0px" : "none",
-                                                        }}
-                                                        className="card_img1"
-                                                        src={image}
-                                                        alt={product.title}
-                                                    />
+                                                    <img className="card_img1" src={image} alt={product.title} />
                                                 </SwiperSlide>
                                             ))}
                                         </Swiper>
@@ -116,10 +81,10 @@ const Cards = () => {
                                         <p className="product_price">Price: ${product.price}</p>
                                         <p className="product_stock">Stock: {product.stock}</p>
                                         <div className="cards_like">
-                                            <button className="like_btn">
+                                            <button className="like_btn" onClick={() => handleAddToLikes(product)}>
                                                 <GiLoveMystery />
                                             </button>
-                                            <button className="basket_btn">
+                                            <button className="basket_btn" onClick={() => handleAddToBasket(product)}>
                                                 <FaShoppingBasket />
                                             </button>
                                         </div>

@@ -24,7 +24,7 @@ const Pages = () => {
         nextClassName="paginate_next"
         onPageChange={handlePageChange} 
         marginPagesDisplayed={1}
-        pageRangeDisplayed={3}
+        pageRangeDisplayed={1}
       />
     </>
   );

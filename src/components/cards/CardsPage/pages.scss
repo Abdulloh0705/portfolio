@@ -1,6 +1,7 @@
 .paginate {
+  
     display: flex;
-    
+    text-align: center;
     gap: 10px;
     justify-content: center;
     padding: 20px;
@@ -20,7 +21,7 @@
   }
   
   .paginate_prev, .paginate_next {
-    cursor:alias;
+    cursor:progress;
     font-weight: bold;
   }
   

@@ -7,16 +7,16 @@
     top: 0;
     background-color: rgb(235, 233, 233);
     border-radius: 0px 0px 23px 23px;
+
     &_box {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
     }
-    &_basket {
-        display: flex;
-        gap: 10px;
-    }
+
+
+
     &_basket-btn,
     &_like-btn {
         cursor: pointer;
@@ -25,18 +25,33 @@
         color: rgb(105, 107, 107);
         border: none;
     }
+
+
     &_logo-title {
         color: rgb(105, 107, 107);
         font-size: 20px;
         font-weight: 900;
     }
-    &_search {
+
+    &_basket {
         display: flex;
-        max-width: 51px;
-        flex-grow: 1;
-        justify-content: flex-end;
+        gap: 10px;
+        flex: 1;
+
+    }
+
+    &_logo {
+        flex: 1;
+        text-align: center;
+    }
+
+    &_search {
+        flex: 1;
+        display: flex;
+        justify-content: end;
     }
 }
+
 .from_search {
     border-radius: 0px 5px 5px 0px;
     font-size: 20px;
@@ -47,14 +62,20 @@
     padding: 3px 3px 1px 0px;
     max-height: 26px;
 }
+
 input {
+
+    width: 100%;
     padding: 4.8px 10px;
     border: none;
     outline: none;
     background-color: #adadad;
     border-radius: 5px 0px 0px 5px;
     color: #fff;
+
     &::placeholder {
         color: #fff;
     }
 }
+
+@media (max-width: 425px) {}

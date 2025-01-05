@@ -15,19 +15,15 @@ const Navbar = () => {
                 <div className="container">
                     <div className="nav_box">
                         <div className="nav_basket">
-                          <div className="basket">
-                          <Link to="/basket">
-                            <button className="nav_basket-btn">
-                                <FaShoppingBasket />
-                            </button>
-                            </Link>
-                          </div>
+                            <div className="basket">
+                                <button className="nav_basket-btn">
+                                    <FaShoppingBasket />
+                                </button>
+                            </div>
                             <div className="like">
-                            <Link to="/like">
-                            <button className="nav_like-btn">
-                                <BiSolidLike />
-                            </button>
-                            </Link>
+                                <button className="nav_like-btn">
+                                    <BiSolidLike />
+                                </button>
                             </div>
                         </div>
                         <div className="nav_logo">

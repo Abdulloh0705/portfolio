@@ -8,36 +8,67 @@ import { Context } from '../../Context/Context';
 import { GiLoveMystery } from 'react-icons/gi';
 import Header from '../header/Header';
 import Pages from './CardsPage/Pages';
-import { FaShoppingBasket } from 'react-icons/fa';
-import { addToLikes, addToBasket, setOffset } from '../service/store';
+import { addToLikes, addToBasket, setOffset } from '../service/store'; // Redux action
 import Skleton from './Skleton';
+import { FaShoppingBasket } from 'react-icons/fa';
 
 const Cards = () => {
     const dispatch = useDispatch();
 
-    // Redux state-dan limit va offset qiymatlarini olish
+    // Redux state-dan ma'lumot olish
     const limit = useSelector((state) => state.page.limit);
     const offset = useSelector((state) => state.page.offset);
 
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const { value } = useContext(Context);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true); // Yuklanish holati
 
     useEffect(() => {
-        setLoading(true);
+        setLoading(true); // Yuklanishni boshlash
         fetch('https://dummyjson.com/products?limit=100')
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data.products);
                 setFilteredProducts(data.products);
-                setLoading(false);
+                setLoading(false); // Yuklanish tugadi
             })
             .catch((error) => {
                 console.error('API xatosi:', error);
-                setLoading(false);
+                setLoading(false); // Xatolik yuz bersa ham yuklanishni tugatish
             });
     }, []);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [offset]);
+
+    const sortProducts = (criteria) => {
+        let sortedProducts = [...products];
+        if (criteria === 'priceLowToHigh') {
+            sortedProducts.sort((a, b) => a.price - b.price);
+        } else if (criteria === 'priceHighToLow') {
+            sortedProducts.sort((a, b) => b.price - a.price);
+        } else if (criteria === 'discounts') {
+            sortedProducts.sort((a, b) => b.discountPercentage - a.discountPercentage);
+        } else if (criteria === 'stockLowToHigh') {
+            sortedProducts.sort((a, b) => a.stock - b.stock);
+        } else if (criteria === 'stockHighToLow') {
+            sortedProducts.sort((a, b) => b.stock - a.stock);
+        }
+        setFilteredProducts(sortedProducts);
+    };
+
+    const searchFilteredProducts = filteredProducts.filter((product) => {
+        const words = product.title.split(' ');
+        const firstWord = words[0]?.toLowerCase();
+        const restWords = words.slice(1).join(' ').toLowerCase();
+
+        return (
+            firstWord.startsWith(value.toLowerCase()) ||
+            restWords.startsWith(value.toLowerCase())
+        );
+    });
 
     const handleAddToLikes = (product) => {
         dispatch(addToLikes(product));
@@ -48,18 +79,20 @@ const Cards = () => {
         dispatch(addToBasket(product));
         alert(`"${product.title}" savatchaga qo'shildi!`);
     };
-
-    
-    const paginatedProducts = filteredProducts.slice(offset, offset + limit);
+    const paginatedProducts = searchFilteredProducts.slice(offset, offset + limit);
 
     return (
         <div className="cards">
-            <Header />
+            <Header sortProducts={sortProducts} />
             <div className="container">
                 <div className="card_box">
                     {loading ? (
-                        Array.from({ length: 6 }).map((_, index) => <Skleton key={index} />)
+                        // Skeleton ko'rsatish
+                        Array.from({ length: 6 }).map((_, index) => (
+                            <Skleton key={index} />
+                        ))
                     ) : (
+                        // Mahsulotlarni ko'rsatish
                         paginatedProducts.map((product) => (
                             <div className="card" key={product.id}>
                                 <div className="card_img">
@@ -67,12 +100,17 @@ const Cards = () => {
                                         <Swiper spaceBetween={10} slidesPerView={1} autoplay={{ delay: 2000 }}>
                                             {product?.images?.map((image, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <img style={{
-                                                        width: (product.id === 6 && index === 0) ? "150px" : "none",
-                                                        padding: (product.id === 6 && index === 0) ? "50px 0px 0px 30px" :
-                                                            (product.id === 6 && index === 1) ? "70px 0px 0px 0px" :
-                                                                (product.id === 6 && index === 2) ? "80px 0px 0px 0px" : "none",
-                                                    }} className="card_img1" src={image} alt={product.title} />
+                                                    <img
+                                                        style={{
+                                                            width: (product.id === 6 && index === 0) ? "150px" : "none",
+                                                            padding: (product.id === 6 && index === 0) ? "50px 0px 0px 30px" :
+                                                                (product.id === 6 && index === 1) ? "70px 0px 0px 0px" :
+                                                                    (product.id === 6 && index === 2) ? "80px 0px 0px 0px" : "none",
+                                                        }}
+                                                        className="card_img1"
+                                                        src={image}
+                                                        alt={product.title}
+                                                    />
                                                 </SwiperSlide>
                                             ))}
                                         </Swiper>
@@ -93,6 +131,7 @@ const Cards = () => {
                                                 <FaShoppingBasket />
                                             </button>
                                         </div>
+                                        <p className="discountPercentage">%{product.discountPercentage}</p>
                                     </div>
                                 </div>
                             </div>

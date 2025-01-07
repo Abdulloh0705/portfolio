@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-// Sahifalash uchun slice
+
 const pageSlice = createSlice({
   name: "page",
   initialState: {
@@ -10,36 +10,36 @@ const pageSlice = createSlice({
   },
   reducers: {
     setOrder: (state, action) => {
-      state.order = action.payload;
+      state.order = action.payload; 
     },
     setOffset: (state, action) => {
-      state.offset = action.payload * state.limit;
+      state.offset = action.payload * state.limit *1+ 4;
     },
   },
 });
 
-// Mahsulotlar uchun slice
+
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
-    likes: [],
-    basket: [],
+    likes: [], 
+    basket: [], 
   },
   reducers: {
     addToLikes: (state, action) => {
-      state.likes.push(action.payload);
+      state.likes.push(action.payload); 
     },
     addToBasket: (state, action) => {
-      state.basket.push(action.payload);
+      state.basket.push(action.payload); 
     },
   },
 });
 
-// Redux action-larni eksport qilish
+
 export const { setOrder, setOffset } = pageSlice.actions;
 export const { addToLikes, addToBasket } = productsSlice.actions;
 
-// Redux store yaratish
+
 const store = configureStore({
   reducer: {
     page: pageSlice.reducer,

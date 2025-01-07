@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './navbar.scss';
 import { Link } from 'react-router-dom';
 import { FaShoppingBasket } from 'react-icons/fa';
@@ -8,9 +8,16 @@ import { Context } from '../../Context/Context';
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-    const { value, setValue } = useContext(Context);
+    // const { value, setValue } = useContext(Context);
     const likesCount = useSelector((state) => state.products.likes.length);
     const basketCount = useSelector((state) => state.products.basket.length);
+    const [value, setValue] = useState (localStorage.getItem('searchValue')||"0");
+
+    useEffect(()=>{
+        if(value) {
+            localStorage.setItem('searchValue', value);
+        }
+    },[value]);
 
     return (
         <>

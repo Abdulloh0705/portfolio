@@ -1,14 +1,13 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import './cards.scss';
 import { Link } from 'react-router-dom';
-import { Context } from '../../Context/Context';
 import { GiLoveMystery } from 'react-icons/gi';
 import Header from '../header/Header';
 import Pages from './CardsPage/Pages';
-import { addToLikes, addToBasket, setOffset } from '../service/store'; // Redux action
+import { addToLikes, addToBasket } from '../service/store';
 import Skleton from './Skleton';
 import { FaShoppingBasket } from 'react-icons/fa';
 
@@ -19,30 +18,31 @@ const Cards = () => {
     const limit = useSelector((state) => state.page.limit);
     const offset = useSelector((state) => state.page.offset);
 
+    // Local state
     const [products, setProducts] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const { value } = useContext(Context);
-    const [loading, setLoading] = useState(true); // Yuklanish holati
+    const [loading, setLoading] = useState(true);
 
+    // Mahsulotlarni yuklash
     useEffect(() => {
-        setLoading(true); // Yuklanishni boshlash
+        setLoading(true);
         fetch('https://dummyjson.com/products?limit=100')
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data.products);
-                setFilteredProducts(data.products);
-                setLoading(false); // Yuklanish tugadi
+                setLoading(false);
             })
             .catch((error) => {
                 console.error('API xatosi:', error);
-                setLoading(false); // Xatolik yuz bersa ham yuklanishni tugatish
+                setLoading(false);
             });
     }, []);
 
+    // Scrollni qayta yuklash
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [offset]);
 
+    // Mahsulotlarni saralash
     const sortProducts = (criteria) => {
         let sortedProducts = [...products];
         if (criteria === 'priceLowToHigh') {
@@ -56,30 +56,23 @@ const Cards = () => {
         } else if (criteria === 'stockHighToLow') {
             sortedProducts.sort((a, b) => b.stock - a.stock);
         }
-        setFilteredProducts(sortedProducts);
+        setProducts(sortedProducts);
     };
 
-    const searchFilteredProducts = filteredProducts.filter((product) => {
-        const words = product.title.split(' ');
-        const firstWord = words[0]?.toLowerCase();
-        const restWords = words.slice(1).join(' ').toLowerCase();
-
-        return (
-            firstWord.startsWith(value.toLowerCase()) ||
-            restWords.startsWith(value.toLowerCase())
-        );
-    });
-
+    // Likega qo'shish
     const handleAddToLikes = (product) => {
         dispatch(addToLikes(product));
         alert(`"${product.title}" mahsulot sevganlar ro'yxatiga qo'shildi!`);
     };
 
+    // Savatchaga qo'shish
     const handleAddToBasket = (product) => {
         dispatch(addToBasket(product));
         alert(`"${product.title}" savatchaga qo'shildi!`);
     };
-    const paginatedProducts = searchFilteredProducts.slice(offset, offset + limit);
+
+    // Paginatsiya bo'yicha mahsulotlarni ko'rsatish
+    const paginatedProducts = products.slice(offset, offset + limit);
 
     return (
         <div className="cards">
@@ -87,12 +80,10 @@ const Cards = () => {
             <div className="container">
                 <div className="card_box">
                     {loading ? (
-                        // Skeleton ko'rsatish
                         Array.from({ length: 6 }).map((_, index) => (
                             <Skleton key={index} />
                         ))
                     ) : (
-                        // Mahsulotlarni ko'rsatish
                         paginatedProducts.map((product) => (
                             <div className="card" key={product.id}>
                                 <div className="card_img">

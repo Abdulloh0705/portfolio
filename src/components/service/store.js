@@ -1,6 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-
 const pageSlice = createSlice({
   name: "page",
   initialState: {
@@ -13,17 +12,17 @@ const pageSlice = createSlice({
       state.order = action.payload; 
     },
     setOffset: (state, action) => {
-      state.offset = action.payload * state.limit *1+ 4;
+      state.offset = action.payload * state.limit * 1 + 4;
     },
   },
 });
-
 
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
     likes: [], 
-    basket: [], 
+    basket: [],
+    search: '',  // qidiruvni Redux store'ga qo'shamiz
   },
   reducers: {
     addToLikes: (state, action) => {
@@ -32,13 +31,14 @@ const productsSlice = createSlice({
     addToBasket: (state, action) => {
       state.basket.push(action.payload); 
     },
+    setSearch: (state, action) => {
+      state.search = action.payload;  // qidiruv qiymatini o'zgartirish
+    },
   },
 });
 
-
 export const { setOrder, setOffset } = pageSlice.actions;
-export const { addToLikes, addToBasket } = productsSlice.actions;
-
+export const { addToLikes, addToBasket, setSearch } = productsSlice.actions;
 
 const store = configureStore({
   reducer: {

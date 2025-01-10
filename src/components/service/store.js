@@ -27,9 +27,10 @@ const productsSlice = createSlice({
   reducers: {
     addToLikes: (state, action) => {
       state.likes.push(action.payload); 
+      
     },
     addToBasket: (state, action) => {
-      state.basket.push(action.payload); 
+      state.basket.push(action.payload);  // Basket logic
     },
     setSearch: (state, action) => {
       state.search = action.payload;  // qidiruv qiymatini o'zgartirish

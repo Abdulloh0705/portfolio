@@ -3,7 +3,7 @@ export const getProducts = async(search) => {
         const response = await fetch(`https://dummyjson.com/products/search?q=${search}`);
         const data = await response.json();
 
-        // Natijalarni cheklash
+       
         if (data.products && data.products.length > 101) {
             data.products = data.products.slice(0, 100);
         }

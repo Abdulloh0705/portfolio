@@ -15,26 +15,24 @@ import { getProducts } from "../service/products";
 const Cards = () => {
     const dispatch = useDispatch();
 
-    // Redux state-dan ma'lumot olish
     const limit = useSelector((state) => state.page.limit);
     const offset = useSelector((state) => state.page.offset);
 
-    // Local state
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const search = useSelector((state) => state.products.search); // Redux store-dan qidiruvni olish
+    const search = useSelector((state) => state.products.search);
 
+   
     useEffect(() => {
         const fetchProducts = async () => {
-            const result = await getProducts(search); // getProducts chaqiriladi
+            const result = await getProducts(search);
             setProducts(result.products);
         };
 
         fetchProducts();
-    }, [search]); // search o'zgarganida mahsulotlarni yangilash
+    }, [search]);
 
-    // Mahsulotlarni yuklash
     useEffect(() => {
         setLoading(true);
         fetch("https://dummyjson.com/products?limit=100")
@@ -49,13 +47,14 @@ const Cards = () => {
             });
     }, []);
 
-    // Scrollni qayta yuklash
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [offset]);
 
-    // Mahsulotlarni saralash
+
     const sortProducts = (criteria) => {
+        localStorage.setItem("sortCriteria", criteria);
+
         let sortedProducts = [...products];
         if (criteria === "priceLowToHigh") {
             sortedProducts.sort((a, b) => a.price - b.price);
@@ -71,19 +70,56 @@ const Cards = () => {
         setProducts(sortedProducts);
     };
 
-    // Likega qo'shish
-    const handleAddToLikes = (product) => {
-        dispatch(addToLikes(product));
-        alert(`"${product.title}" mahsulot sevganlar ro'yxatiga qo'shildi!`);
-    };
 
-    // Savatchaga qo'shish
+    useEffect(() => {
+        const hasVisitedBefore = localStorage.getItem("hasVisitedBefore");
+
+        if (!hasVisitedBefore) {
+
+            const savedCriteria = localStorage.getItem("sortCriteria");
+            if (savedCriteria) {
+                sortProducts(savedCriteria);
+            }
+
+
+            localStorage.setItem("hasVisitedBefore", "true");
+        }
+    }, []);
+
+    
+
+ const handleAddToLikes = (product) => {
+    dispatch(addToLikes(product));
+
+    // Mavjud liked mahsulotlar ro'yxatini olish
+    let likedProducts = JSON.parse(localStorage.getItem("likedProducts")) || [];
+
+    // Agar mahsulot ro'yxatda bo'lmasa, uni qo'shish
+    if (!likedProducts.some((likedProduct) => likedProduct.id === product.id)) {
+        likedProducts.push(product);
+        localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
+    }
+
+    alert(`"${product.title}" mahsulot sevganlar ro'yxatiga qo'shildi!`);
+    console.log(handleAddToLikes);
+};
+
+
+  
+    useEffect(() => {
+        const savedLikedProduct = localStorage.getItem("likedProduct");
+        if (savedLikedProduct) {
+            const product = JSON.parse(savedLikedProduct);
+            handleAddToLikes(product);
+            // localStorage.removeItem("likedProduct"); 
+        }
+    }, []); 
+
     const handleAddToBasket = (product) => {
         dispatch(addToBasket(product));
         alert(`"${product.title}" savatchaga qo'shildi!`);
     };
 
-    // Paginatsiya bo'yicha mahsulotlarni ko'rsatish
     const paginatedProducts = products.slice(offset, offset + limit);
 
     return (
@@ -94,53 +130,53 @@ const Cards = () => {
                     {loading
                         ? Array.from({ length: 6 }).map((_, index) => <Skleton key={index} />)
                         : paginatedProducts.map((product) => (
-                              <div className="card" key={product.id}>
-                                  <div className="card_img">
-                                      <Link to={`/products/${product.id}`}>
-                                          <Swiper spaceBetween={10} slidesPerView={1} autoplay={{ delay: 2000 }}>
-                                              {product?.images?.map((image, index) => (
-                                                  <SwiperSlide key={index}>
-                                                      <img
-                                                          style={{
-                                                              width: product.id === 6 && index === 0 ? "150px" : "none",
-                                                              padding:
-                                                                  product.id === 6 && index === 0
-                                                                      ? "50px 0px 0px 30px"
-                                                                      : product.id === 6 && index === 1
-                                                                      ? "70px 0px 0px 0px"
-                                                                      : product.id === 6 && index === 2
-                                                                      ? "80px 0px 0px 0px"
-                                                                      : "none",
-                                                          }}
-                                                          className="card_img1"
-                                                          src={image}
-                                                          alt={product.title}
-                                                      />
-                                                  </SwiperSlide>
-                                              ))}
-                                          </Swiper>
-                                      </Link>
-                                  </div>
-                                  <div className="product_esse">
-                                      <div className="product_text">
-                                          <h3>{product.title}</h3>
-                                      </div>
-                                      <div className="price_stock">
-                                          <p className="product_price">Price: ${product.price}</p>
-                                          <p className="product_stock">Stock: {product.stock}</p>
-                                          <div className="cards_like">
-                                              <button className="like_btn" onClick={() => handleAddToLikes(product)}>
-                                                  <GiLoveMystery />
-                                              </button>
-                                              <button className="basket_btn" onClick={() => handleAddToBasket(product)}>
-                                                  <FaShoppingBasket />
-                                              </button>
-                                          </div>
-                                          <p className="discountPercentage">%{product.discountPercentage}</p>
-                                      </div>
-                                  </div>
-                              </div>
-                          ))}
+                            <div className="card" key={product.id}>
+                                <div className="card_img">
+                                    <Link to={`/products/${product.id}`}>
+                                        <Swiper spaceBetween={10} slidesPerView={1} autoplay={{ delay: 2000 }}>
+                                            {product?.images?.map((image, index) => (
+                                                <SwiperSlide key={index}>
+                                                    <img
+                                                        style={{
+                                                            width: product.id === 6 && index === 0 ? "150px" : "none",
+                                                            padding:
+                                                                product.id === 6 && index === 0
+                                                                    ? "50px 0px 0px 30px"
+                                                                    : product.id === 6 && index === 1
+                                                                        ? "70px 0px 0px 0px"
+                                                                        : product.id === 6 && index === 2
+                                                                            ? "80px 0px 0px 0px"
+                                                                            : "none",
+                                                        }}
+                                                        className="card_img1"
+                                                        src={image}
+                                                        alt={product.title}
+                                                    />
+                                                </SwiperSlide>
+                                            ))}
+                                        </Swiper>
+                                    </Link>
+                                </div>
+                                <div className="product_esse">
+                                    <div className="product_text">
+                                        <h3>{product.title}</h3>
+                                    </div>
+                                    <div className="price_stock">
+                                        <p className="product_price">Price: ${product.price}</p>
+                                        <p className="product_stock">Stock: {product.stock}</p>
+                                        <div className="cards_like">
+                                            <button className="like_btn" onClick={() => handleAddToLikes(product)} >
+                                                <GiLoveMystery />
+                                            </button>
+                                            <button className="basket_btn" onClick={() => handleAddToBasket(product)}>
+                                                <FaShoppingBasket />
+                                            </button>
+                                        </div>
+                                        <p className="discountPercentage">%{product.discountPercentage}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                 </div>
             </div>
             <div className="pages">

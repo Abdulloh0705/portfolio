@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: end;
 }
 
 .product_img_box {
@@ -80,5 +81,7 @@
     font-size: 20px;
 }
 @media (max-width: 425px) {
-
+    .product_img_box{
+        width: 200px;
+    }
 }

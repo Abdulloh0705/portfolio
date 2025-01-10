@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import './navbar.scss';
-import { Link } from 'react-router-dom';
-import { FaShoppingBasket } from 'react-icons/fa';
-import { BiSolidLike } from 'react-icons/bi';
-import { IoSearch } from 'react-icons/io5';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSearch } from '../service/store'; // Redux action import
-import { getProducts } from '../service/products';
+import React, { useEffect, useState } from "react";
+import "./navbar.scss";
+import { Link } from "react-router-dom";
+import { FaShoppingBasket } from "react-icons/fa";
+import { BiSolidLike } from "react-icons/bi";
+import { IoSearch } from "react-icons/io5";
+import { useSelector, useDispatch } from "react-redux";
+import { setSearch } from "../service/store"; // Redux action import
+import { getProducts } from "../service/products";
 
 const Navbar = () => {
-    const {data } = getProducts(search)
+    const dispatch = useDispatch();
     const likesCount = useSelector((state) => state.products.likes.length);
     const basketCount = useSelector((state) => state.products.basket.length);
     const search = useSelector((state) => state.products.search); // Redux store-dan qidiruvni olish
-    const dispatch = useDispatch();
 
-    const [value, setValue] = useState(search || ''); // `search`ni Reduxdan olamiz
+    const [value, setValue] = useState(search || ""); // `search`ni Reduxdan olamiz
 
     useEffect(() => {
         // `value` yangilanganida, uni Redux store'ga va localStorage'ga saqlaymiz
         dispatch(setSearch(value));
-        localStorage.setItem('searchValue', value);
+        localStorage.setItem("searchValue", value);
     }, [value, dispatch]); // `value` va `dispatch` o'zgarishiga javoban ishlaydi
 
     return (
@@ -42,10 +41,12 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="nav_logo">
-                        <Link to="/" className="nav_logo-title">Izana</Link>
+                        <Link to="/" className="nav_logo-title">
+                            Izana
+                        </Link>
                     </div>
                     <div className="nav_search">
-                        <form className='from'>
+                        <form className="from">
                             <input
                                 type="text"
                                 placeholder="product name"

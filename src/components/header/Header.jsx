@@ -6,7 +6,7 @@ const Header = ({ sortProducts }) => {
     const [isActive, setActive] = useState(false);
     const [isStarActive, setStarActive] = useState(false);
 
-    // Tashqi joyni bosganingizda menyuni yopish funksiyasi
+    
     const handleClickOutside = (event) => {
         if (!event.target.closest('.header_money') && isActive) {
             setActive(false);

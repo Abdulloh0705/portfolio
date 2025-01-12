@@ -22,6 +22,8 @@ const Navbar = () => {
         localStorage.setItem("searchValue", value);
     }, [value, dispatch]); // `value` va `dispatch` o'zgarishiga javoban ishlaydi
 
+    
+
     return (
         <div className="nav">
             <div className="container">

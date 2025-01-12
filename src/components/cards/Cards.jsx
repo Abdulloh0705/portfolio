@@ -86,38 +86,57 @@ const Cards = () => {
         }
     }, []);
 
+    useEffect(() => {
+        localStorage.setItem('addToLikes', JSON.stringify(addToLikes))
+        showLikedProducts()
+    }, [addToLikes])
     
 
  const handleAddToLikes = (product) => {
     dispatch(addToLikes(product));
 
-    // Mavjud liked mahsulotlar ro'yxatini olish
+   
     let likedProducts = JSON.parse(localStorage.getItem("likedProducts")) || [];
 
-    // Agar mahsulot ro'yxatda bo'lmasa, uni qo'shish
+   
     if (!likedProducts.some((likedProduct) => likedProduct.id === product.id)) {
         likedProducts.push(product);
         localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
     }
 
-    alert(`"${product.title}" mahsulot sevganlar ro'yxatiga qo'shildi!`);
-    console.log(handleAddToLikes);
+    // alert(`"${product.title}" mahsulot sevganlar ro'yxatiga qo'shildi!`);
+   
+   
 };
+// console.log(handleAddToLikes);
+
+
+localStorage.setItem('product', 'handleAddToBasket');
+
+
+console.log(localStorage.getItem('product'));
+
+function showLikedProducts() {
+    let likedProducts = JSON.parse(localStorage.getItem("likedProducts")) || [];
+    for (let product of likedProducts) {
+        // alert(`Mahsulot nomi: ${product.title}`);
+    }
+}
 
 
   
-    useEffect(() => {
-        const savedLikedProduct = localStorage.getItem("likedProduct");
-        if (savedLikedProduct) {
-            const product = JSON.parse(savedLikedProduct);
-            handleAddToLikes(product);
-            // localStorage.removeItem("likedProduct"); 
-        }
-    }, []); 
+    // useEffect(() => {
+    //     const savedLikedProduct = localStorage.getItem("likedProduct");
+    //     if (savedLikedProduct) {
+    //         const product = JSON.parse(savedLikedProduct);
+    //         handleAddToLikes(product);
+             
+    //     }
+    // }, []); 
 
     const handleAddToBasket = (product) => {
         dispatch(addToBasket(product));
-        alert(`"${product.title}" savatchaga qo'shildi!`);
+        // alert(`"${product.title}" savatchaga qo'shildi!`);
     };
 
     const paginatedProducts = products.slice(offset, offset + limit);

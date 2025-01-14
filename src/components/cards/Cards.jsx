@@ -23,7 +23,7 @@ const Cards = () => {
 
     const search = useSelector((state) => state.products.search);
 
-   
+
     useEffect(() => {
         const fetchProducts = async () => {
             const result = await getProducts(search);
@@ -76,6 +76,7 @@ const Cards = () => {
 
         if (!hasVisitedBefore) {
 
+            
             const savedCriteria = localStorage.getItem("sortCriteria");
             if (savedCriteria) {
                 sortProducts(savedCriteria);
@@ -88,55 +89,27 @@ const Cards = () => {
 
     useEffect(() => {
         localStorage.setItem('addToLikes', JSON.stringify(addToLikes))
+    
         showLikedProducts()
-    }, [addToLikes])
+    }, [localStorage])
+
+
+    const handleAddToLikes = (product) => {
+        dispatch(addToLikes(product));
+        alert(`"${product.title}" yoqtrganlarga qo'shildi!`);
+    };
+    
+    localStorage.setItem('product', 'handleAddToBasket');
     
 
- const handleAddToLikes = (product) => {
-    dispatch(addToLikes(product));
-
-   
-    let likedProducts = JSON.parse(localStorage.getItem("likedProducts")) || [];
-
-   
-    if (!likedProducts.some((likedProduct) => likedProduct.id === product.id)) {
-        likedProducts.push(product);
-        localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
+    function showLikedProducts() {
+       
     }
 
-    // alert(`"${product.title}" mahsulot sevganlar ro'yxatiga qo'shildi!`);
-   
-   
-};
-// console.log(handleAddToLikes);
-
-
-localStorage.setItem('product', 'handleAddToBasket');
-
-
-console.log(localStorage.getItem('product'));
-
-function showLikedProducts() {
-    let likedProducts = JSON.parse(localStorage.getItem("likedProducts")) || [];
-    for (let product of likedProducts) {
-        // alert(`Mahsulot nomi: ${product.title}`);
-    }
-}
-
-
-  
-    // useEffect(() => {
-    //     const savedLikedProduct = localStorage.getItem("likedProduct");
-    //     if (savedLikedProduct) {
-    //         const product = JSON.parse(savedLikedProduct);
-    //         handleAddToLikes(product);
-             
-    //     }
-    // }, []); 
 
     const handleAddToBasket = (product) => {
         dispatch(addToBasket(product));
-        // alert(`"${product.title}" savatchaga qo'shildi!`);
+        alert(`"${product.title}" savatchaga qo'shildi!`);
     };
 
     const paginatedProducts = products.slice(offset, offset + limit);

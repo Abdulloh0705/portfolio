@@ -1,15 +1,15 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const pageSlice = createSlice({
   name: "page",
   initialState: {
-    order: '', 
-    limit: 12, 
+    order: "",
+    limit: 12,
     offset: 0,
   },
   reducers: {
     setOrder: (state, action) => {
-      state.order = action.payload; 
+      state.order = action.payload;
     },
     setOffset: (state, action) => {
       state.offset = action.payload * state.limit * 1 + 4;
@@ -18,22 +18,23 @@ const pageSlice = createSlice({
 });
 
 const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState: {
-    likes: [], 
-    basket: [],
-    search: '',  // qidiruvni Redux store'ga qo'shamiz
+    likes: JSON.parse(localStorage.getItem("like")) || [],
+    basket: JSON.stringify(localStorage.removeItem("basket")) || [],
+    search: "",
   },
   reducers: {
     addToLikes: (state, action) => {
-      state.likes.push(action.payload); 
-      
+      state.likes.push(action.payload);
+      localStorage.setItem("like", JSON.stringify(state.likes));
     },
     addToBasket: (state, action) => {
-      state.basket.push(action.payload);  // Basket logic
+      state.basket.push(action.payload);
+      localStorage.setItem("basket", JSON.stringify(state.basket));
     },
     setSearch: (state, action) => {
-      state.search = action.payload;  // qidiruv qiymatini o'zgartirish
+      state.search = action.payload;
     },
   },
 });

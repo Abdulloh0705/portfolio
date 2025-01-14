@@ -10,7 +10,7 @@ export const getProducts = async(search) => {
 
         return data;
     } catch (error) {
-        // console.clear(error);
+        
 
         return [];
     }

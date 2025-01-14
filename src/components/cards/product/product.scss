@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: end;
+    margin-top: 20px;
 }
 
 .product_img_box {
@@ -55,7 +56,7 @@
     justify-content:center;
 }
 .product_description{
-    width: 400px;
+    max-width: 100%;
     height: 130px;
     display: flex;
     align-items: center;
@@ -84,4 +85,13 @@
     .product_img_box{
         width: 200px;
     }
+    .product-brand{
+        display: flex;
+        text-align:center;
+    }
+    .product1_images {
+        display: flex !important;
+        flex-direction: row;
+    }
+
 }

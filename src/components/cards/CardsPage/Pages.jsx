@@ -15,7 +15,7 @@ const Pages = () => {
     <>
       <ReactPaginate
         className="paginate"
-        pageCount={8} 
+        pageCount={9} 
         previousLabel={'<<'}
         nextLabel={'>>'}
         pageLinkClassName="paginate_link"

@@ -120,7 +120,7 @@ const Cards = () => {
             <div className="container">
                 <div className="card_box">
                     {loading
-                        ? Array.from({ length: 6 }).map((_, index) => <Skleton key={index} />)
+                        ? Array.from({ length: 12 }).map((_, index) => <Skleton key={index} />)
                         : paginatedProducts.map((product) => (
                             <div className="card" key={product.id}>
                                 <div className="card_img">

@@ -12,7 +12,7 @@ const pageSlice = createSlice({
       state.order = action.payload;
     },
     setOffset: (state, action) => {
-      state.offset = action.payload * state.limit * 1 + 4;
+      state.offset = action.payload * state.limit *1;
     },
   },
 });

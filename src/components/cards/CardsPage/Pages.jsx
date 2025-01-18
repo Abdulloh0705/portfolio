@@ -1,21 +1,23 @@
 import React from 'react';
 import "./pages.scss";
 import { useDispatch } from 'react-redux';
-import { setOffset } from '../../service/store'; 
+import { setOffset, setskip } from '../../service/store'; 
 import ReactPaginate from 'react-paginate';
 
 const Pages = () => {
   const dispatch = useDispatch();
 
   const handlePageChange = ({ selected }) => {
+    
     dispatch(setOffset(selected)); 
+    dispatch(setskip(selected * 12)); 
   };
 
   return (
     <>
       <ReactPaginate
         className="paginate"
-        pageCount={9} 
+        pageCount={9}  
         previousLabel={'<<'}
         nextLabel={'>>'}
         pageLinkClassName="paginate_link"

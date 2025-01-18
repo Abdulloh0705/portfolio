@@ -1,4 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { skipToken } from "@tanstack/react-query";
 
 const pageSlice = createSlice({
   name: "page",
@@ -6,6 +7,7 @@ const pageSlice = createSlice({
     order: "",
     limit: 12,
     offset: 0,
+    skip: 0,
   },
   reducers: {
     setOrder: (state, action) => {
@@ -14,6 +16,9 @@ const pageSlice = createSlice({
     setOffset: (state, action) => {
       state.offset = action.payload * state.limit *1;
     },
+    setskip: (state, action) => {
+      state.skip = action.payload
+    }
   },
 });
 
@@ -39,8 +44,10 @@ const productsSlice = createSlice({
   },
 });
 
-export const { setOrder, setOffset } = pageSlice.actions;
-export const { addToLikes, addToBasket, setSearch } = productsSlice.actions;
+
+
+export const { setOrder, setOffset,  setskip } = pageSlice.actions;
+export const { addToLikes, addToBasket, setSearch} = productsSlice.actions;
 
 const store = configureStore({
   reducer: {

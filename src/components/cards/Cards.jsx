@@ -17,11 +17,12 @@ const Cards = () => {
 
     const limit = useSelector((state) => state.page.limit);
     const offset = useSelector((state) => state.page.offset);
-
+    const pagination = useSelector((state) => state.page.skip);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const search = useSelector((state) => state.products.search);
+
 
 
     useEffect(() => {
@@ -35,17 +36,18 @@ const Cards = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch("https://dummyjson.com/products?limit=100")
+        fetch(`https://dummyjson.com/products?limit=12&skip=${pagination}`)
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data.products);
                 setLoading(false);
+                // dispatch(setProductsTotal(data.products));
             })
             .catch((error) => {
                 console.error("API xatosi:", error);
                 setLoading(false);
             });
-    }, []);
+    }, [pagination, dispatch]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -76,7 +78,7 @@ const Cards = () => {
 
         if (!hasVisitedBefore) {
 
-            
+
             const savedCriteria = localStorage.getItem("sortCriteria");
             if (savedCriteria) {
                 sortProducts(savedCriteria);
@@ -89,7 +91,7 @@ const Cards = () => {
 
     useEffect(() => {
         localStorage.setItem('addToLikes', JSON.stringify(addToLikes))
-    
+
         showLikedProducts()
     }, [localStorage])
 
@@ -98,12 +100,12 @@ const Cards = () => {
         dispatch(addToLikes(product));
         alert(`"${product.title}" yoqtrganlarga qo'shildi!`);
     };
-    
+
     localStorage.setItem('product', 'handleAddToBasket');
-    
+
 
     function showLikedProducts() {
-       
+
     }
 
 
@@ -112,7 +114,7 @@ const Cards = () => {
         alert(`"${product.title}" savatchaga qo'shildi!`);
     };
 
-    const paginatedProducts = products.slice(offset, offset + limit);
+    const paginatedProducts = products
 
     return (
         <div className="cards">

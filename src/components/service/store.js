@@ -8,6 +8,7 @@ const pageSlice = createSlice({
     limit: 12,
     offset: 0,
     skip: 0,
+    page:0gitb ,
   },
   reducers: {
     setOrder: (state, action) => {
@@ -18,7 +19,10 @@ const pageSlice = createSlice({
     },
     setskip: (state, action) => {
       state.skip = action.payload
-    }
+    },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
   },
 });
 
@@ -46,7 +50,7 @@ const productsSlice = createSlice({
 
 
 
-export const { setOrder, setOffset,  setskip } = pageSlice.actions;
+export const { setOrder, setOffset,  setskip, setPage } = pageSlice.actions;
 export const { addToLikes, addToBasket, setSearch} = productsSlice.actions;
 
 const store = configureStore({

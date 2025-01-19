@@ -3,18 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "./cards.scss";
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import { GiLoveMystery } from "react-icons/gi";
 import Header from "../header/Header";
 import Pages from "./CardsPage/Pages";
-import { addToLikes, addToBasket } from "../service/store";
+import { addToLikes, addToBasket, setPage } from "../service/store";
 import Skleton from "./Skleton";
 import { FaShoppingBasket } from "react-icons/fa";
 import { getProducts } from "../service/products";
 
 const Cards = () => {
     const dispatch = useDispatch();
-
+    const page = useSelector((state) => state.page.page);
     const limit = useSelector((state) => state.page.limit);
     const offset = useSelector((state) => state.page.offset);
     const pagination = useSelector((state) => state.page.skip);
@@ -23,12 +23,15 @@ const Cards = () => {
 
     const search = useSelector((state) => state.products.search);
 
-
+    // useEffect(() => {
+    //     dispatch( setPage(Math.ceil(data?.data.count / 12)));
+    // }, [data])
 
     useEffect(() => {
         const fetchProducts = async () => {
             const result = await getProducts(search);
             setProducts(result.products);
+            dispatch(setPage(result?.total / 12));
         };
 
         fetchProducts();
@@ -41,6 +44,7 @@ const Cards = () => {
             .then((data) => {
                 setProducts(data.products);
                 setLoading(false);
+                dispatch(setPage(result?.total / 12));
                 // dispatch(setProductsTotal(data.products));
             })
             .catch((error) => {
@@ -133,14 +137,10 @@ const Cards = () => {
                                                     <img
                                                         style={{
                                                             width: product.id === 6 && index === 0 ? "150px" : "none",
-                                                            padding:
-                                                                product.id === 6 && index === 0
-                                                                    ? "50px 0px 0px 30px"
-                                                                    : product.id === 6 && index === 1
-                                                                        ? "70px 0px 0px 0px"
-                                                                        : product.id === 6 && index === 2
-                                                                            ? "80px 0px 0px 0px"
-                                                                            : "none",
+                                                            padding: product.id === 6 && index === 0 ? "50px 0px 0px 30px"
+                                                                : product.id === 6 && index === 1 ? "70px 0px 0px 0px"
+                                                                    : product.id === 6 && index === 2 ? "80px 0px 0px 0px"
+                                                                        : product.id === 19 && index === 0 ? "80px 0px 0px 0px" : 'none'
                                                         }}
                                                         className="card_img1"
                                                         src={image}

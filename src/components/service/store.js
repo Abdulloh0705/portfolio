@@ -8,7 +8,7 @@ const pageSlice = createSlice({
     limit: 12,
     offset: 0,
     skip: 0,
-    page:0gitb ,
+    page:0,
   },
   reducers: {
     setOrder: (state, action) => {

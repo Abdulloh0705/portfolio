@@ -23,9 +23,7 @@ const Cards = () => {
 
     const search = useSelector((state) => state.products.search);
 
-    // useEffect(() => {
-    //     dispatch( setPage(Math.ceil(data?.data.count / 12)));
-    // }, [data])
+
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -39,42 +37,63 @@ const Cards = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`https://dummyjson.com/products?limit=12&skip=${pagination}`)
+        fetch(`https://dummyjson.com/products?limit=${limit}&skip=${pagination}`)
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data.products);
                 setLoading(false);
-                dispatch(setPage(result?.total / 12));
-                // dispatch(setProductsTotal(data.products));
+
+                dispatch(setPage(Math.ceil(data.total / limit)));
             })
             .catch((error) => {
                 console.error("API xatosi:", error);
                 setLoading(false);
             });
-    }, [pagination, dispatch]);
+    }, [pagination, limit, dispatch]);
+
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [offset]);
 
 
-    const sortProducts = (criteria) => {
+    const sortProducts = async (criteria) => {
         localStorage.setItem("sortCriteria", criteria);
 
-        let sortedProducts = [...products];
-        if (criteria === "priceLowToHigh") {
-            sortedProducts.sort((a, b) => a.price - b.price);
-        } else if (criteria === "priceHighToLow") {
-            sortedProducts.sort((a, b) => b.price - a.price);
-        } else if (criteria === "discounts") {
-            sortedProducts.sort((a, b) => b.discountPercentage - a.discountPercentage);
-        } else if (criteria === "stockLowToHigh") {
-            sortedProducts.sort((a, b) => a.stock - b.stock);
-        } else if (criteria === "stockHighToLow") {
-            sortedProducts.sort((a, b) => b.stock - a.stock);
+        try {
+            const response = await fetch(`https://dummyjson.com/products?limit=${limit}&skip=${pagination}`);
+            const data = await response.json();
+
+            let sortedProducts = [...data.products];
+            if (criteria === "priceLowToHigh") {
+                sortedProducts.sort((a, b) => a.price - b.price);
+            } else if (criteria === "priceHighToLow") {
+                sortedProducts.sort((a, b) => b.price - a.price);
+            } else if (criteria === "discounts") {
+                sortedProducts.sort((a, b) => b.discountPercentage - a.discountPercentage);
+            } else if (criteria === "stockLowToHigh") {
+                sortedProducts.sort((a, b) => a.stock - b.stock);
+            } else if (criteria === "stockHighToLow") {
+                sortedProducts.sort((a, b) => b.stock - a.stock);
+            } else if (criteria === "stockName") {
+                sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (criteria === "all") {
+                sortedProducts = data.products;
+            }
+
+            setProducts(sortedProducts);
+        } catch (error) {
+            console.error("Error while sorting products:", error);
         }
-        setProducts(sortedProducts);
     };
+
+
+    useEffect(() => {
+        const savedCriteria = localStorage.getItem("sortCriteria");
+        if (savedCriteria) {
+            sortProducts(savedCriteria);
+        }
+    }, [pagination, limit]); // Add dependencies to reapply sorting on pagination or limit change
 
 
     useEffect(() => {

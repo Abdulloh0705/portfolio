@@ -23,13 +23,14 @@ const Products = () => {
     return (
         <div className="product">
             <div className="container">
+                <div className="product-brand">
+                    <p className="brand">
+                        {product.brand}
+                    </p>
+                </div>
                 <div className="product-box">
-                    <div className="product-brand">
-                        <p className="brand">
-                            {product.brand}
-                        </p>
-                    </div>
-                    <div className="product1_images">
+                   <div className="product_img_big-box">
+                   <div className="product1_images">
                         {product.images.map((image, index) => (
                             <img
                                 key={index}
@@ -43,6 +44,7 @@ const Products = () => {
                     <div className="product_img_box">
                         <img className="main_image" src={mainImage} alt={product.title} />
                     </div>
+                   </div>
 
                     <div className="product-esse">
                         <h2 className="product-title">{product.title}</h2>
@@ -50,10 +52,10 @@ const Products = () => {
                         <p className="product-price">Price: ${product.price}</p>
                         <div className="rating">
                             <div className="rating_icon">
-                            <IoStar />
+                                <IoStar />
                             </div>
                             <div className="rating_title">
-                            <p className="product-rating">{product.rating}</p>
+                                <p className="product-rating">{product.rating}</p>
                             </div>
                         </div>
 

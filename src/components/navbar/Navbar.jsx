@@ -23,6 +23,7 @@ const Navbar = () => {
    
     return (
         <div className="nav">
+          
             <div className="container">
                 <div className="nav_box">
                     <div className="nav_basket">
@@ -51,6 +52,7 @@ const Navbar = () => {
                                 placeholder="product name"
                                 value={value}
                                 onChange={(e) => setValue(e.target.value)}
+                                className="from_input"
                             />
                         </form>
                         <div className="nav_from_search">

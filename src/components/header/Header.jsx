@@ -37,6 +37,7 @@ const Header = ({ sortProducts }) => {
                 <div className="header_box">
                     <div className="header_price">
                         <div className="header_money">
+                        
                             <button
                                 className={`money_btn ${isActive ? 'active' : ''}`}
                                 onClick={togglePriceMenu}
@@ -45,6 +46,7 @@ const Header = ({ sortProducts }) => {
                             </button>
                             {isActive && (
                                 <ul className="menu">
+                                     <li onClick={() => sortProducts('all')}>All</li> 
                                     <li onClick={() => sortProducts('priceLowToHigh')}>Low to High</li>
                                     <li onClick={() => sortProducts('priceHighToLow')}>High to Low</li>
                                     <li onClick={() => sortProducts('discounts')}>Discounts</li>
@@ -62,6 +64,8 @@ const Header = ({ sortProducts }) => {
                                 <ul className="menu">
                                     <li onClick={() => sortProducts('stockLowToHigh')}>Low to High</li>
                                     <li onClick={() => sortProducts('stockHighToLow')}>High to Low</li>
+                                    <li onClick={() => sortProducts('stockName')}>name</li>
+
                                 </ul>
                             )}
                         </div>

@@ -1,10 +1,4 @@
-.product-box {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: end;
-    margin-top: 20px;
-}
+.product-box {}
 
 .product_img_box {
     flex: 2;
@@ -18,7 +12,7 @@
     object-fit: cover;
     transition: transform 0.3s ease;
     width: 250px;
-    height:fit-content;
+    height: fit-content;
 }
 
 .product1_images {
@@ -28,7 +22,11 @@
     gap: 10px;
     align-items: flex-end;
     justify-content: center;
-    
+
+}
+
+.product_img_big-box {
+    display: flex;
 }
 
 .product2_images {
@@ -39,7 +37,7 @@
     cursor: pointer;
     transition: transform 0.3s ease, border 0.3s ease;
     border: 2px solid transparent;
-   
+
 }
 
 .product2_images.active {
@@ -50,48 +48,72 @@
 .product2_images:hover {
     transform: scale(1.1);
 }
-.product-esse{
+
+.product-esse {
     display: flex;
     flex-direction: column;
-    justify-content:center;
+    align-items: center;
+    text-align: justify;
 }
-.product_description{
-    max-width: 100%;
+
+.product_description {
+    width: 400px;
     height: 130px;
     display: flex;
+    justify-content: center;
     align-items: center;
 }
-.rating{
+
+.rating {
     display: flex;
     margin: 10px 0px;
     gap: 5px;
-   
-    &_icon{
+
+    &_icon {
         color: rgb(255, 251, 0);
         font-size: 30px;
     }
-    
-&_title{
-    display: flex;
-    align-items: center;
+
+    &_title {
+        display: flex;
+        align-items: center;
+    }
 }
-}
-.brand{
-    margin:20px;
+
+.brand {
+    margin: 20px;
     font-weight: 900;
     font-size: 20px;
+    display: flex;
+    justify-content: center;
 }
-@media (max-width: 425px) {
-    .product_img_box{
-        width: 200px;
-    }
-    .product-brand{
+
+
+@media (max-width: 426px) {
+
+    .product-brand {
         display: flex;
-        text-align:center;
+        text-align: center;
+    }
+    .product_description{
+        width: 300px;
     }
     .product1_images {
-        display: flex !important;
-        flex-direction: row;
+      margin: 10px 0px;
     }
 
+}
+@media (max-width: 367px) {
+    .product_img_big-box{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .product1_images{
+        display: flex;
+        flex-direction: row;
+    }
+    .product2_images {
+        width: 80px;
+        height: 80px;
+    }
 }

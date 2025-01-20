@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { skipToken } from "@tanstack/react-query";
+
 
 const pageSlice = createSlice({
   name: "page",
